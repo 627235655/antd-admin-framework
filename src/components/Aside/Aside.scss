@@ -1,0 +1,31 @@
+.aside{
+	width: 200px !important;
+	background-color: #fff !important;
+	max-height: calc(100vh - 64px);
+	.trigger-wrap{
+		position: absolute;
+		top: 150px;
+		right: -22px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 80px;
+		width: 22px;
+		background-color: #fff;
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+	.trigger {
+	  font-size: 18px;
+	  cursor: pointer;
+	  transition: color .3s;
+	}
+	.trigger:hover {
+	  color: #1890ff;
+	}
+	.ant-layout-sider-children {
+		height: calc(100vh - 64px);
+		overflow-x: visible;
+		overflow-y: scroll;
+	}
+}
