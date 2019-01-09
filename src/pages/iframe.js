@@ -1,33 +1,44 @@
-import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb } from 'antd';
+import {
+    Layout,
+    Breadcrumb
+} from 'antd';
 import Iframe from 'react-iframe';
 
-const { Content } = Layout;
+const {
+    Content
+} = Layout;
 
 class commonIframe extends Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
-            iframe_url: '',
+            iframe_url: this.props.location.state.url,
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            iframe_url: this.props.location.state,
-        })
-    }
-
-    onload = () => {
-        console.log(1123)
+    componentWillReceiveProps(nextProps) {
+        // 代表点击的侧边栏 iframe 刷新
+        if (nextProps.location.state.reload && nextProps.location.state.url === this.state.iframe_url) {
+            this.setState({
+                iframe_url : ""
+            })
+            setTimeout(()=>{
+                this.setState({
+                    iframe_url : nextProps.location.state.url
+                })
+            }, 100)
+        }
     }
 
     render() {
         return (
             <Iframe
                 url={this.state.iframe_url}
-                onLoad={() => this.onload}
+                onLoad={() => {}}
                 height="100%"
                 id="myIframe"
                 position="relative"
@@ -40,4 +51,3 @@ class commonIframe extends Component {
 }
 
 export default commonIframe;
-

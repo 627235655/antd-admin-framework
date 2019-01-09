@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {
+	BrowserRouter,
+	Route,
+	Switch
+} from 'react-router-dom';
 import indexHtml from '../pages/index'
 import NoMatch from '../pages/no-match'
 
-// /customer-service-system-backend
-// /custom-service-home/page
+// local   /custom-service-views
+// online  /custom-service-home
 class BasicRoute extends Component {
-	render (){
+	render() {
 		return (
-		    <BrowserRouter basename="/custom-service-home/page">
+			<BrowserRouter basename="/custom-service-views/page">
 		        <Switch>
 		            <Route path="/index" component={indexHtml} />
 		            <Route component={NoMatch}/>

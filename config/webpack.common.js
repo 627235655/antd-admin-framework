@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const os = require('os');
 const _root = path.resolve(__dirname, '..');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -57,7 +57,7 @@ module.exports = {
                     options: {
                         limit: 10000,
                         name: '[name].[ext]?[hash]',
-                        outputPath: 'assets/', // 图片输出的路径
+                        outputPath: 'assets/images/', // 图片输出的路径
                     }
                 }]
             }
@@ -68,5 +68,14 @@ module.exports = {
             template: "./index.html",
             filename: "./index.html"
         })
-    ]
+    ],
+    resolve: {
+        // 模糊匹配
+        alias: {
+            assets: path.join(__dirname, '../src/assets'),
+            components: path.join(__dirname, '../src/components'),
+            pages: path.join(__dirname, '../src/pages'),
+            router: path.join(__dirname, '../src/router'),
+        }
+    }
 };

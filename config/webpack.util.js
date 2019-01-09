@@ -56,6 +56,6 @@ const getFileList = function(files, filePath) {
         console.log(err)
     }
     console.log(files)
-}
+};
 
 module.exports = { getIP, root,  getFileList};

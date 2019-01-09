@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config config/webpack.dev.js",
     "build": "rimraf dist && webpack --config config/webpack.pro.js --progress --colors --profile",
+    "build:publish": "rimraf dist && webpack --config config/webpack.pro.js --progress --colors --profile",
     "test": "xp2 dev $npm_package_name $npm_package_version -s",
     "pp": "xp2 prod $npm_package_name $npm_package_version -s",
     "publish": "xp2 publish $npm_package_name $npm_package_version"
@@ -48,5 +49,8 @@
   "minCss": false,
   "output": [
     "dist/**"
-  ]
+  ],
+  "dependencies": {
+    "expose-loader": "^0.7.5"
+  }
 }
