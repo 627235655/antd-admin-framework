@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import './Aside.scss'
 import {
     Link
@@ -22,43 +21,13 @@ const {
     Sider
 } = Layout;
 
-const subMenuList = [{
-                        "subMenuList":[],
-                        "menuIcon":"home",
-                        "menuUrl":"https://www.ningzongyuan.com/blog/index/home",
-                        "menuId":969,
-                        "menuName":"首页"
-                    },{
-                        "subMenuList":[{
-                            "subMenuList":[],
-                            "menuIcon":"",
-                            "menuUrl":"http://dotamax.com/",
-                            "menuId":974,
-                            "menuName":"max+"
-                        },{
-                            "subMenuList":[],
-                            "menuIcon":"",
-                            "menuUrl":"https://tieba.baidu.com/f?kw=dota2&fr=ala0&tpl=5",
-                            "menuId":974,
-                            "menuName":"dota2吧"
-                        },{
-                            "subMenuList":[],
-                            "menuIcon":"",
-                            "menuUrl":"https://www.dota2.com.cn/index.htm",
-                            "menuId":974,
-                            "menuName":"dota2官网"
-                        }],
-                        "menuIcon":"form",
-                        "menuId":973,
-                        "menuName":"Dota2"
-                    }];
 class CommonAside extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuList: [],
+            menuList: this.props.menuList,
             collapsed: false,
-            rootSubmenuKeys: [],
+            rootSubmenuKeys: this.props.rootSubmenuKeys,
             openKeys: this.props.openKeys,
         }
     }
@@ -67,60 +36,6 @@ class CommonAside extends Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
-    }
-
-    getMenuItems = () => {
-        let self = this,
-            data = {
-                loginUserId: window.loginUserId || 878,
-                businessType: 1,
-            }
-        // axios.post('/custom-service-home/menu/getUserMenuTree', data)
-        //     .then(function(response) {
-        //         let res = response.data;
-        //         let rootSubmenuKeys = self.state.rootSubmenuKeys;
-        //         res.data.subMenuList.map((item, i) => {
-        //             if (item.subMenuList.length > 0) {
-        //                 rootSubmenuKeys.push(item.menuName)
-        //             }
-        //         })
-        //         self.setState({
-        //             menuList: res.data.subMenuList,
-        //             rootSubmenuKeys: rootSubmenuKeys,
-        //         })
-        //         // 默认打开首页
-        //         if (self.state.menuList.length > 0) {
-        //             let path = {
-        //                 pathname: '/index/iframe',
-        //                 state: {
-        //                     url: self.state.menuList[0].menuUrl,
-        //                     reload: true,
-        //                 },
-        //             }
-        //             self.props.history.push(path);
-        //             self.props.setNavTabs(self.state.menuList[0], '')
-        //         }
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //     });
-        // 默认打开首页
-        self.setState({
-            menuList: subMenuList,
-            rootSubmenuKeys: self.state.rootSubmenuKeys,
-        }, () => {
-            if (self.state.menuList.length > 0) {
-                let path = {
-                    pathname: '/index/iframe',
-                    state: {
-                        url: self.state.menuList[0].menuUrl,
-                        reload: true,
-                    },
-                }
-                self.props.history.push(path);
-                self.props.setNavTabs(self.state.menuList[0], '')
-            }
-        })
     }
 
     // 只有一个菜单栏打开
@@ -142,7 +57,7 @@ class CommonAside extends Component {
                 if (item.subMenuList.length === 0) {
                     return (<Menu.Item
                                 key={item.menuName}
-                                onClick={() => this.props.setNavTabs(item, parentKey) }
+                                onClick={() => this.props.setNavTabs({item, parentKey}) }
                             >
                                 <a>
                                     { !parentKey && <Icon type={item.menuIcon} />}
@@ -165,14 +80,12 @@ class CommonAside extends Component {
         })
     }
 
-    componentDidMount() {
-        this.getMenuItems();
-    }
-
     componentWillReceiveProps(nextProps) {
         this.setState({
+            menuList: nextProps.menuList,
+            rootSubmenuKeys: nextProps.rootSubmenuKeys,
             openKeys: nextProps.openKeys,
-        })
+        });
     }
 
     render() {

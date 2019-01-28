@@ -15,15 +15,15 @@ module.exports = webpackMerge(common, {
         filename: 'index.js'
     },
     devServer: {
-        port: 2222,
+        port: 3333,
         host: getIP(),
         historyApiFallback: true, //不跳转
         inline: true, //实时刷新
         open: true,
-        openPage: 'custom-service-views/page/index/iframe',
+        openPage: 'antd-admin/page/index/iframe',
         proxy: {
             '/custom-service-home/*': {
-                target: 'http://192.168.138.238:8080',
+                target: 'http://192.168.139.78:8080',
                 changeOrigin: true,
                 secure: false,
                 // pathRewrite: {'^/api': ''}
