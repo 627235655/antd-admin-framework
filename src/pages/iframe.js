@@ -17,16 +17,20 @@ class commonIframe extends Component {
         super(props);
         this.state = {
             iframe_url: this.props.location.state.iframe_url,
+            iframe_nav_name: this.props.location.state.iframe_nav_name,
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        // 代表侧边栏被点击 iframe 刷新 // 判断不带参数的页面路由是否一致
-        if (nextProps.location.state.is_reload && nextProps.location.state.iframe_url.split('?')[0] === this.state.iframe_url.split('?')[0]) {
+        let iframe_is_reload = nextProps.location.state.is_reload,
+            iframe_url_is_same = nextProps.location.state.iframe_url.split('?')[0] === this.state.iframe_url.split('?')[0],
+            iframe_nav_name_is_same = nextProps.location.state.iframe_nav_name === this.state.iframe_nav_name
+        // 代表侧边栏被点击 iframe 刷新 // 判断不带参数的页面路由是否一致.split('?')[0]
+        if (iframe_is_reload && iframe_url_is_same && iframe_nav_name_is_same) {
             this.setState({
                 iframe_url : ""
             })
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.setState({
                     iframe_url : nextProps.location.state.iframe_url
                 })
@@ -38,11 +42,9 @@ class commonIframe extends Component {
         window.removeEventListener("message", getPostMessage, false);
         function getPostMessage(event) {
             if(event != undefined){
-                event.data.TO_CUSTOMER_FRAMEWORK
-                && Array.isArray(event.data.TO_CUSTOMER_FRAMEWORK)
-                && event.data.TO_CUSTOMER_FRAMEWORK.map((v, i) => {
-                    window[v.fnName](v.params)
-                })
+                event.data.controlFrameworkInfo
+                &&
+                window[event.data.controlFrameworkInfo.fnName](event.data.controlFrameworkInfo.params)
             }
         }
         //监听message事件

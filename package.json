@@ -1,17 +1,17 @@
 {
-  "name": "customer-service-framework",
+  "name": "antd-admin-framework",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --config config/webpack.dev.js",
-    "build": "rimraf dist && webpack --config config/webpack.pro.js --progress --colors --profile",
-    "build:publish": "rimraf dist && webpack --config config/webpack.pro.js --progress --colors --profile",
-    "test": "xp2 dev $npm_package_name $npm_package_version -s",
-    "pp": "xp2 prod $npm_package_name $npm_package_version -s",
-    "publish": "xp2 publish $npm_package_name $npm_package_version"
+    "build": "rimraf dist && webpack --config config/webpack.pro.js --progress --colors --profile"
   },
   "author": "zongyuan.ning",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:627235655/antd-admin-framework.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -45,11 +45,6 @@
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.4"
   },
-  "minJs": false,
-  "minCss": false,
-  "output": [
-    "dist/**"
-  ],
   "dependencies": {
     "expose-loader": "^0.7.5"
   }

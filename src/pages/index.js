@@ -21,6 +21,61 @@ const {
 } = Layout;
 const TabPane = Tabs.TabPane;
 
+const subMenuList = [{
+	        "subMenuList":[],
+	        "menuIcon":"home",
+	        "menuUrl":"/antd-admin/page/demo-home",
+	        "menuId":1,
+	        "menuName":"首页"
+	    },{
+	        "subMenuList":[],
+	        "menuIcon":"home",
+	        "menuUrl":"/antd-admin/page/demo-open-aside-tab",
+	        "menuId":2,
+	        "menuName":"打开侧边导航页"
+	    },{
+	        "subMenuList":[],
+	        "menuIcon":"home",
+	        "menuUrl":"/antd-admin/page/demo-open-new-tab",
+	        "menuId":3,
+	        "menuName":"新开标签页(不属侧边栏)"
+	    },{
+	        "subMenuList":[],
+	        "menuIcon":"home",
+	        "menuUrl":"/antd-admin/page/demo-close-current-tab",
+	        "menuId":3,
+	        "menuName":"关闭标签页"
+	    },{
+	        "subMenuList":[{
+	            "subMenuList":[],
+	            "menuIcon":"",
+	            "menuUrl":"http://dotamax.com/",
+	            "menuId":5,
+	            "menuName":"max+"
+	        },{
+	            "subMenuList":[],
+	            "menuIcon":"",
+	            "menuUrl":"https://tieba.baidu.com/f?kw=dota2&fr=ala0&tpl=5",
+	            "menuId":6,
+	            "menuName":"dota2吧"
+	        },{
+	            "subMenuList":[],
+	            "menuIcon":"",
+	            "menuUrl":"https://www.dota2.com.cn/index.htm",
+	            "menuId":7,
+	            "menuName":"dota2官网"
+	        }],
+	        "menuIcon":"form",
+	        "menuId":8,
+	        "menuName":"Dota2-二级菜单示例"
+	    },{
+	        "subMenuList":[],
+	        "menuIcon":"home",
+	        "menuUrl":"https://www.ningzongyuan.com/blog/index/home",
+	        "menuId":4,
+	        "menuName":"我的博客"
+	    }];
+
 class indexHtml extends Component {
 	constructor(props) {
 		super();
@@ -37,86 +92,58 @@ class indexHtml extends Component {
 		}
 	}
 
-	// 在此处获取或者设置导航菜单信息
 	getMenuItems = () => {
-		let self = this;
-		let res = {
-			data: {
-				subMenuList: [
-					{
-						"subMenuList": [],
-						"menuIcon": "",
-						"menuUrl": "/antd-admin/page/demo-home",
-						"menuId": 1,
-						"menuName": "首页"
-					},
-					{
-						"subMenuList": [],
-						"menuIcon": "",
-						"menuUrl": "/antd-admin/page/demo-control-other-tab",
-						"menuId": 2,
-						"menuName": "打开另一个侧边导航"
-					},
-					{
-						"subMenuList": [],
-						"menuIcon": "",
-						"menuUrl": "/antd-admin/page/demo-control-new-tab",
-						"menuId": 3,
-						"menuName": "新开标签页"
-					},
-					{
-						"subMenuList": [
-							{
-								"subMenuList": [],
-								"menuIcon": "",
-								"menuUrl": "https://www.dota2.com.cn/index.htm",
-								"menuId": 5,
-								"menuName": "DOTA2-官网"
-							},
-							{
-								"subMenuList": [],
-								"menuIcon": "",
-								"menuUrl": "https://tieba.baidu.com/f?kw=dota2&fr=ala0&tpl=5",
-								"menuId": 6,
-								"menuName": "DOTA2-贴吧"
-							},
-							{
-								"subMenuList": [],
-								"menuIcon": "",
-								"menuUrl": "http://www.dotamax.com/",
-								"menuId": 7,
-								"menuName": "MAX+"
-							},
-							{
-								"subMenuList": [],
-								"menuIcon": "",
-								"menuUrl": "https://baike.baidu.com/item/%E5%88%80%E5%A1%942/18511480?fromtitle=dota2&fromid=5221381&fr=aladdin",
-								"menuId": 8,
-								"menuName": "DOTA2-百度百科"
-							}
-						],
-						"menuIcon": "form",
-						"menuId": 4,
-						"menuName": "DOTA2-二级菜单"
-					}
-				]
-			}
-		}
-		self.setState({
-            menuList: res.data.subMenuList,
+        let self = this;
+        // 默认打开首页
+        self.setState({
+            menuList: subMenuList,
             rootSubmenuKeys: self.state.rootSubmenuKeys,
         }, () => {
-        	// 默认打开首页
-	        if (self.state.menuList.length > 0) {
-	            self.changeHistory({
-					iframe_url: self.state.menuList[0].menuUrl,
-					is_reload: false,
-				})
-	            self.setNavTabs({
-	        		item:self.state.menuList[0],
-	        	})
-	        }
+            if (self.state.menuList.length > 0) {
+                let path = {
+                    pathname: '/index/iframe',
+                    state: {
+                        url: self.state.menuList[0].menuUrl,
+                        reload: true,
+                    },
+                }
+                self.props.history.push(path);
+                self.setNavTabs({item: self.state.menuList[0], parentKey: ''})
+            }
         })
+     //    axios.post('/custom-service-home/menu/getUserMenuTree', data)
+     //        .then(function(response) {
+     //            let res = response.data,
+     //            	rootSubmenuKeys = self.state.rootSubmenuKeys;
+     //            res.data.subMenuList.map((item, i) => {
+     //            	// // todo-del
+     //                // if (item.menuName === '知识管理') {
+     //                //     item.menuUrl = 'http://192.168.137.33:5555/custom-service-views/page/kms/knowledge-management';
+     //                // }
+     //                // // todo-del
+     //                if (item.subMenuList.length > 0) {
+     //                    rootSubmenuKeys.push(item.menuName)
+     //                }
+     //            })
+     //            self.setState({
+     //                menuList: res.data.subMenuList,
+     //                rootSubmenuKeys: rootSubmenuKeys,
+     //            })
+     //            // 默认打开首页
+     //            if (self.state.menuList.length > 0) {
+     //                self.changeHistory({
+     //                	iframe_nav_name: self.state.menuList[0].menuName,
+					// 	iframe_url: self.state.menuList[0].menuUrl,
+					// 	is_reload: false,
+					// })
+     //                self.setNavTabs({
+     //            		item:self.state.menuList[0],
+     //            	})
+     //            }
+     //        })
+     //        .catch(function(error) {
+     //            console.log(error);
+     //        });
     }
 
 	// 改变页面路由
@@ -176,6 +203,7 @@ class indexHtml extends Component {
 				});
 				// 保持 iframe 不刷新 - 改变 history 的原因-要确认哪一个 iframe 是打开的
 				this.changeHistory({
+					iframe_nav_name: activeKey,
 					iframe_url: item.source_item.menuUrl,
 					is_reload: false,
 				})
@@ -205,6 +233,7 @@ class indexHtml extends Component {
 		});
 		// 切换页面路由
 		this.changeHistory({
+			iframe_nav_name: item.menuName,
 			iframe_url: item.menuUrl,
 			is_reload: true,
 		})
@@ -242,6 +271,7 @@ class indexHtml extends Component {
 	 * @return 修改对应的侧边栏选中项
 	 */
 	remove = (targetKey) => {
+		console.log(targetKey)
 		let activeKey = this.state.activeKey,
 			selectedKeys = this.state.selectedKeys,
 			openKeys = this.state.openKeys,
@@ -307,6 +337,7 @@ class indexHtml extends Component {
 	componentDidMount() {
         this.getMenuItems();
 		window.setNavTabs = this.setNavTabs;
+		window.remove = this.remove;
 	}
 
 	render() {
@@ -337,7 +368,7 @@ class indexHtml extends Component {
 				        >
 				          {this.state.panes.map(pane =>
 				          	<TabPane tab={pane.title} key={pane.key}>
-					          	<Content className="page-content">
+					          	<Content className="iframe-wrap">
 			                    	<Route
 			                    		exact
 			                    		path={`/index/iframe`}

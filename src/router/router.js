@@ -10,8 +10,9 @@ import {
 import indexHtml from '../pages/index'
 import NoMatch from '../pages/no-match'
 import DemoHome from '../pages/demo-home'
-import DemoControlOtherTab from '../pages/demo-control-other-tab'
-import DemoControlNewTab from '../pages/demo-control-new-tab'
+import DemoOpenAsideTab from '../pages/demo-open-aside-tab'
+import DemoOpenNewTab from '../pages/demo-open-new-tab'
+import DemoCloseCurrentTab from '../pages/demo-close-current-tab'
 
 
 class BasicRoute extends Component {
@@ -21,8 +22,9 @@ class BasicRoute extends Component {
 		        <Switch>
 		            <Route path="/index" component={indexHtml} />
 		            <Route path="/demo-home" component={DemoHome}/>
-		            <Route path="/demo-control-other-tab" component={DemoControlOtherTab}/>
-		            <Route path="/demo-control-new-tab" component={DemoControlNewTab}/>
+		            <Route path="/demo-open-aside-tab" component={DemoOpenAsideTab}/>
+		            <Route path="/demo-open-new-tab" component={DemoOpenNewTab}/>
+		            <Route path="/demo-close-current-tab" component={DemoCloseCurrentTab}/>
 		            <Route component={NoMatch}/>
 		        </Switch>
 		    </BrowserRouter>
